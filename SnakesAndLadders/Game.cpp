@@ -82,12 +82,11 @@ void Game::playGame()
 	bool playerOneGoesFirst = false;
 	bool playerTwoGoesFirst = false;
 
-	bool playerOneWin = false;
-	bool playerTwoWin = false;
+	bool gameOver = false;
 
 	fstream winFile("winLog.txt", ios::out);
 
-	// ### Game Core ###
+	// GAME CORE
 
 	board.drawBoard(40, 1, playerOne, playerTwo);
 
@@ -122,7 +121,7 @@ void Game::playGame()
 	Console::clear();
 	board.drawBoard(40, 1, playerOne, playerTwo);
 
-	// Get rolls
+	// Get rolls to see who goes first
 	while (playerOneGoesFirst != true && playerTwoGoesFirst != true)
 	{
 		Console::setCursorPosition(16, 45);
@@ -137,16 +136,19 @@ void Game::playGame()
 		Console::setCursorPosition(18, 45);
 
 		// Print who goes first
+		// P1 goes first
 		if (playerOneRoll > playerTwoRoll)
 		{
 			cout << playerOne.getPlayerName() << " goes first!";
 			playerOneGoesFirst = true;
 		}
+		// P2 goes first
 		else if (playerOneRoll < playerTwoRoll)
 		{
 			cout << playerTwo.getPlayerName() << " goes first!";
 			playerTwoGoesFirst = true;
 		}
+		// They draw
 		else if (playerOneRoll == playerTwoRoll)
 		{
 			cout << "It's a draw!";
@@ -161,7 +163,7 @@ void Game::playGame()
 	board.drawBoard(40, 1, playerOne, playerTwo);
 
 	// Game Loop
-	while (playerOneWin != true && playerTwoWin != true)
+	while (gameOver != true)
 	{
 		// Draw new board
 		Console::clear();
@@ -170,8 +172,8 @@ void Game::playGame()
 		// Player One goes first
 		if (playerOneGoesFirst == true)
 		{
-			int prevPlayerOnePosition = playerOne.getPlayerPosition();
-			int prevPlayerTwoPosition = playerTwo.getPlayerPosition();
+			//int prevPlayerOnePosition = playerOne.getPlayerPosition();
+			//int prevPlayerTwoPosition = playerTwo.getPlayerPosition();
 
 			// Move Player One and display result
 			Console::setCursorPosition(17, 35);
@@ -182,7 +184,7 @@ void Game::playGame()
 			// Player One Wins
 			if (playerOne.getPlayerPosition() == 25)
 			{
-				playerOneWin = true;
+				gameOver = true;
 				Console::clear();
 
 				// Store Game Result into file
@@ -203,7 +205,7 @@ void Game::playGame()
 			// Player Two Wins
 			if (playerTwo.getPlayerPosition() == 25)
 			{
-				playerTwoWin = true;
+				gameOver = true;
 				Console::clear();
 
 				// Store Game Result into file
@@ -228,7 +230,7 @@ void Game::playGame()
 			// Player Two wins
 			if (playerTwo.getPlayerPosition() >= 25)
 			{
-				playerTwoWin = true;
+				gameOver = true;
 				Console::clear();
 
 				// Store Game Result into file
@@ -249,7 +251,7 @@ void Game::playGame()
 			// Player One wins
 			if (playerOne.getPlayerPosition() >= 25)
 			{
-				playerOneWin = true;
+				gameOver = true;
 				Console::clear();
 
 				// Store Game Result into file

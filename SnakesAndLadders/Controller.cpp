@@ -1,17 +1,8 @@
 #include "Controller.h"
 
-void Controller::setRoll(int i)
-{
-	roll = i;
-}
-
-int Controller::getRoll()
-{
-	return roll;
-}
-
 void Controller::movePlayer(Player &player)
 {
+	int roll;
 	int newPosition;
 
 	bool landedOnSnake = false;
