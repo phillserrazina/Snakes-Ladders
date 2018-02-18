@@ -8,6 +8,16 @@ Player::Player()
 	playerPosition = 1;
 }
 
+void Player::setPlayerRoll(int i)
+{
+	roll = i;
+}
+
+int Player::getPlayerRoll()
+{
+	return roll;
+}
+
 void Player::setPlayerPosition(int i)
 {
 	playerPosition = i;

@@ -84,7 +84,7 @@ void Game::playGame()
 
 	bool gameOver = false;
 
-	fstream winFile("winLog.txt", ios::out);
+	fstream winFile("winLog.txt", ios::app);
 
 	// GAME CORE
 
@@ -172,14 +172,12 @@ void Game::playGame()
 		// Player One goes first
 		if (playerOneGoesFirst == true)
 		{
-			//int prevPlayerOnePosition = playerOne.getPlayerPosition();
-			//int prevPlayerTwoPosition = playerTwo.getPlayerPosition();
-
 			// Move Player One and display result
 			Console::setCursorPosition(17, 35);
 			controller.movePlayer(playerOne);
 			Console::setCursorPosition(2, 2);
 			Console::pause("Press any key to roll!");
+			// Sleep(1000);
 
 			// Player One Wins
 			if (playerOne.getPlayerPosition() == 25)
@@ -188,7 +186,7 @@ void Game::playGame()
 				Console::clear();
 
 				// Store Game Result into file
-				winFile << playerOne.getPlayerName() << " won" << endl;
+				winFile << playerOne.getPlayerName() << " won against " << playerTwo.getPlayerName() << endl;
 
 				Console::setCursorPosition(10, 40);
 				cout << playerOne.getPlayerName() << " won!";
@@ -196,25 +194,30 @@ void Game::playGame()
 				mainMenu();
 			}
 
-			// Move Player Two and display result
-			Console::setCursorPosition(18, 35);
-			controller.movePlayer(playerTwo);
-			Console::setCursorPosition(2, 2);
-			Console::pause("Press any key to roll!");
-
-			// Player Two Wins
-			if (playerTwo.getPlayerPosition() == 25)
+			if (gameOver != true)
 			{
-				gameOver = true;
-				Console::clear();
+				// Move Player Two and display result
+				Console::setCursorPosition(18, 35);
+				controller.movePlayer(playerTwo);
+				Console::setCursorPosition(2, 2);
+				Console::pause("Press any key to roll!");
+				// Sleep(1000);
 
-				// Store Game Result into file
-				winFile << playerTwo.getPlayerName() << " won" << endl;
+				// Player Two Wins
+			
+				if (playerTwo.getPlayerPosition() == 25)
+				{
+					gameOver = true;
+					Console::clear();
 
-				Console::setCursorPosition(10, 40);
-				cout << playerTwo.getPlayerName() << " won!";
-				Sleep(3000);
-				mainMenu();
+					// Store Game Result into file
+					winFile << playerTwo.getPlayerName() << " won against " << playerOne.getPlayerName() << endl;
+
+					Console::setCursorPosition(10, 40);
+					cout << playerTwo.getPlayerName() << " won!";
+					Sleep(3000);
+					mainMenu();
+				}
 			}
 		}
 
@@ -226,6 +229,7 @@ void Game::playGame()
 			controller.movePlayer(playerTwo);
 			Console::setCursorPosition(2, 2);
 			Console::pause("Press any key to roll!");
+			// Sleep(1000);
 
 			// Player Two wins
 			if (playerTwo.getPlayerPosition() >= 25)
@@ -234,7 +238,7 @@ void Game::playGame()
 				Console::clear();
 
 				// Store Game Result into file
-				winFile << playerTwo.getPlayerName() << " won" << endl;
+				winFile << playerTwo.getPlayerName() << " won against " << playerOne.getPlayerName() << endl;
 
 				Console::setCursorPosition(10, 40);
 				cout << playerTwo.getPlayerName() << " won!";
@@ -242,25 +246,29 @@ void Game::playGame()
 				mainMenu();
 			}
 
-			// Move Player One and display result
-			Console::setCursorPosition(18, 35);
-			controller.movePlayer(playerOne);
-			Console::setCursorPosition(2, 2);
-			Console::pause("Press any key to roll!");
-
-			// Player One wins
-			if (playerOne.getPlayerPosition() >= 25)
+			if (gameOver != true)
 			{
-				gameOver = true;
-				Console::clear();
+				// Move Player One and display result
+				Console::setCursorPosition(18, 35);
+				controller.movePlayer(playerOne);
+				Console::setCursorPosition(2, 2);
+				Console::pause("Press any key to roll!");
+				// Sleep(1000);
 
-				// Store Game Result into file
-				winFile << playerOne.getPlayerName() << " won" << endl;
+				// Player One wins
+				if (playerOne.getPlayerPosition() >= 25)
+				{
+					gameOver = true;
+					Console::clear();
 
-				Console::setCursorPosition(10, 40);
-				cout << playerOne.getPlayerName() << " won!";
-				Sleep(3000);
-				mainMenu();
+					// Store Game Result into file
+					winFile << playerOne.getPlayerName() << " won against " << playerTwo.getPlayerName() << endl;
+
+					Console::setCursorPosition(10, 40);
+					cout << playerOne.getPlayerName() << " won!";
+					Sleep(3000);
+					mainMenu();
+				}
 			}
 		}
 	}
