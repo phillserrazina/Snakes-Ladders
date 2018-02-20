@@ -6,7 +6,7 @@ void Game::setVisualSettings()
 	Console::setWindowTitle("Console Snakes & Ladders");	// Set Window Title
 	Console::setTextBufferSize(30, 110);					// Set Console Size
 	Console::setWindowPosition(200, 450);					// Set Console Position
-	Console::setColour(Console::BLACK, Console::WHITE);		// Set bg colour to white and text colour to black.
+	Console::setColour(Console::BLACK, Console::WHITE);		// Set background colour to white and text colour to black.
 	Console::clear();
 }
 
@@ -63,6 +63,30 @@ void Game::mainMenu()
 		Sleep(2000);
 		mainMenu();
 	}
+}
+
+// Function that handles the Rules Menu.
+void Game::rulesMenu()
+{
+	Console::clear();
+
+	string choice;
+	cout << "The rules of this game are very simple:" << endl << endl;
+	cout << "1. A dice is rolled to determine who goes first (highest value goes first);" << endl;
+	cout << "2. Both players roll the dice in turns until they reach tile 25;" << endl;
+	cout << "3. If a player lands on the bottom of the ladder, they move to its' top;" << endl;
+	cout << "4. If a player lands on the head of the snake, they move to its' tail;" << endl;
+	cout << "5. To win a player must roll the exact number to land on square 25 or they do NOT move;" << endl;
+	cout << endl << "Type 'back' to go to the main menu." << endl << endl;
+	cin >> choice;
+
+	while (choice != "back")
+	{
+		cout << "That is not a valid command. Type 'back' to go to the main menu." << endl;
+		cin >> choice;
+	}
+
+	mainMenu();
 }
 
 // Function that handles the Main Game
@@ -186,7 +210,7 @@ void Game::playGame()
 				Console::clear();
 
 				// Store Game Result into file
-				winFile << playerOne.getPlayerName() << " won against " << playerTwo.getPlayerName() << endl;
+				winFile << playerOne.getPlayerName() << " won against " << playerTwo.getPlayerName() << " in " << playerOne.getNoOfMoves() << " moves" << endl;
 
 				Console::setCursorPosition(10, 40);
 				cout << playerOne.getPlayerName() << " won!";
@@ -211,7 +235,7 @@ void Game::playGame()
 					Console::clear();
 
 					// Store Game Result into file
-					winFile << playerTwo.getPlayerName() << " won against " << playerOne.getPlayerName() << endl;
+					winFile << playerTwo.getPlayerName() << " won against " << playerOne.getPlayerName() << " in " << playerTwo.getNoOfMoves() << " moves" << endl;
 
 					Console::setCursorPosition(10, 40);
 					cout << playerTwo.getPlayerName() << " won!";
@@ -238,7 +262,7 @@ void Game::playGame()
 				Console::clear();
 
 				// Store Game Result into file
-				winFile << playerTwo.getPlayerName() << " won against " << playerOne.getPlayerName() << endl;
+				winFile << playerTwo.getPlayerName() << " won against " << playerOne.getPlayerName() << " in " << playerTwo.getNoOfMoves() << " moves" << endl;
 
 				Console::setCursorPosition(10, 40);
 				cout << playerTwo.getPlayerName() << " won!";
@@ -262,7 +286,7 @@ void Game::playGame()
 					Console::clear();
 
 					// Store Game Result into file
-					winFile << playerOne.getPlayerName() << " won against " << playerTwo.getPlayerName() << endl;
+					winFile << playerOne.getPlayerName() << " won against " << playerTwo.getPlayerName() << " in " << playerOne.getNoOfMoves() << " moves" << endl;
 
 					Console::setCursorPosition(10, 40);
 					cout << playerOne.getPlayerName() << " won!";
@@ -272,28 +296,4 @@ void Game::playGame()
 			}
 		}
 	}
-}
-
-// Function that handles the Rules Menu.
-void Game::rulesMenu()
-{
-	Console::clear();
-
-	string choice;
-	cout << "The rules of this game are very simple:" << endl << endl;
-	cout << "1. A dice is rolled to determine who goes first (highest value goes first);" << endl;
-	cout << "2. Both players roll the dice in turns until they reach tile 25;" << endl;
-	cout << "3. If a player lands on the bottom of the ladder, they move to its' top;" << endl;
-	cout << "4. If a player lands on the head of the snake, they move to its' tail;" << endl;
-	cout << "5. To win a player must roll the exact number to land on square 25 or they do NOT move;" << endl;
-	cout << endl << "Type 'back' to go to the main menu." << endl << endl;
-	cin >> choice;
-
-	while (choice != "back")
-	{
-		cout << "That is not a valid command. Type 'back' to go to the main menu." << endl;
-		cin >> choice;
-	}
-
-	mainMenu();
 }

@@ -10,6 +10,7 @@ class Player
 {
 private:
 	int roll;
+	int noOfMoves;
 
 	int playerPosition;
 	string playerName;
@@ -19,6 +20,9 @@ public:
 
 	void setPlayerRoll(int);
 	int getPlayerRoll();
+
+	void setNoOfMoves(int);
+	int getNoOfMoves();
 
 	void setPlayerPosition(int);
 	int getPlayerPosition();

@@ -2,6 +2,8 @@
 
 void Controller::movePlayer(Player &player)
 {
+	// VARIABLES
+
 	int newPosition;
 
 	bool landedOnSnake = false;
@@ -9,11 +11,13 @@ void Controller::movePlayer(Player &player)
 
 	Dice dice;
 
+	// Roll the dice
 	player.setPlayerRoll(dice.rollDie());
 
+	// Calculate player's new tile
 	newPosition = player.getPlayerPosition() + player.getPlayerRoll();
 
-	// Snake Rolls
+	// Check if player lands on a snake head
 	for (int i = 0; i < NUM_OF_SNAKES; i++)
 	{
 		// If the player's new position equals any of the avaiable snake's heads, trigger this
@@ -26,6 +30,7 @@ void Controller::movePlayer(Player &player)
 			// Set player's position to be the snake's tail position
 			newPosition = snakeArray[i].getTail();
 
+			// Move snake to a new position
 			snakeArray[i].moveSnake(snakeArray);
 
 			Console::setCursorPosition(22, 27);
@@ -36,7 +41,7 @@ void Controller::movePlayer(Player &player)
 		}
 	}
 
-	// Ladder Rolls
+	// Check if player lands on the bottom of a ladder
 	for (int i = 0; i < NUM_OF_LADDERS; i++)
 	{
 		// If the player's new position equals any of the avaiable ladder's bottom, trigger this
@@ -52,8 +57,6 @@ void Controller::movePlayer(Player &player)
 			landedOnLadder = true;
 		}
 	}
-
-	// Normal Roll
 
 	// If player didn't land in either a snake or ladder, trigger this
 	if (landedOnSnake == false && landedOnLadder == false)
@@ -71,6 +74,9 @@ void Controller::movePlayer(Player &player)
 			cout << player.getPlayerName() << " rolls a " << player.getPlayerRoll() << " and moves to square " << newPosition << "." << endl;
 		}
 	}
+
+	// Update player's number of moves
+	player.setNoOfMoves(player.getNoOfMoves() + 1);
 
 	// Assign new player's position
 	player.setPlayerPosition(newPosition);

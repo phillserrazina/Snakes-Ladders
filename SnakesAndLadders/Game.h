@@ -17,8 +17,8 @@ public:
 
 	void setVisualSettings();
 	void mainMenu();
-	void playGame();
 	void rulesMenu();
+	void playGame();
 };
 
 #endif
