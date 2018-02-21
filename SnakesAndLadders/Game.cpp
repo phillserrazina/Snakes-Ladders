@@ -1,6 +1,6 @@
 #include "Game.h"
 
-// Function that sets the Visual Settings (Console name and colour)
+// Function that sets the Visual Settings (Console name, colour and size)
 void Game::setVisualSettings()
 {
 	Console::setWindowTitle("Console Snakes & Ladders");	// Set Window Title
@@ -142,12 +142,12 @@ void Game::playGame()
 	cout << "A die is going to be rolled to determine who goes first.";
 	Sleep(2000);
 
-	Console::clear();
-	board.drawBoard(40, 1, playerOne, playerTwo);
-
 	// Get rolls to see who goes first
 	while (playerOneGoesFirst != true && playerTwoGoesFirst != true)
 	{
+		Console::clear();
+		board.drawBoard(40, 1, playerOne, playerTwo);
+
 		Console::setCursorPosition(16, 45);
 		Sleep(1000);
 		int playerOneRoll = dice.rollDie();
@@ -177,8 +177,6 @@ void Game::playGame()
 		{
 			cout << "It's a draw!";
 			Sleep(1500);
-			Console::clear();
-			board.drawBoard(40, 1, playerOne, playerTwo);
 		}
 	}
 

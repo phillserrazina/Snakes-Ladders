@@ -39,7 +39,7 @@ int Board::getBoardHeight()
 
 void Board::drawBoard(int boardX, int boardY, Player playerOne, Player playerTwo)
 {
-	int offSet = 2.5;
+	int offSet = 2;
 	int offSetMultiplier = 5;
 
 	// ### BOARD EDGES ###

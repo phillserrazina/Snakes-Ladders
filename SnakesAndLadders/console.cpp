@@ -169,12 +169,12 @@ void Console::drawLineH(int length, char charValue)
 
 void Console::drawLineV(int length, char charValue)
 {
-	int yPos = Console::getCursorPosition().Y;
-	int xPos = Console::getCursorPosition().X;
+	int yPos = getCursorPosition().Y;
+	int xPos = getCursorPosition().X;
 
 	for (int i = 0; i < length; i++)
 	{
-		Console::setCursorPosition(yPos, xPos);
+		setCursorPosition(yPos, xPos);
 
 		std::cout << charValue << std::endl;
 
