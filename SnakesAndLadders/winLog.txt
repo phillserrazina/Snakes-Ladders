@@ -1,3 +1,4 @@
-t won against a in 11 moves
-g won against v in 16 moves
-t won against d in 4 moves
+Test won against Demo in 7 moves
+Demo won against Test in 11 moves
+Test won against Demo in 6 moves
+Demo won against Test in 10 moves

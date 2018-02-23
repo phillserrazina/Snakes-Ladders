@@ -23,9 +23,7 @@ int Dice::getSides()
 // Function rollDie() returns a random number between 0 and numberOfSides.
 int Dice::rollDie()
 {
-	int result;
-	
-	result = rand() % numOfSides + 1;
+	int result = rand() % numOfSides + 1;
 
 	return result;
 }

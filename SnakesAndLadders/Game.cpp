@@ -96,12 +96,10 @@ void Game::playGame()
 
 	Dice dice;
 	Board board;
-	Player playerOne;
-	Player playerTwo;
+	Player playerOne, playerTwo;
 	Controller controller;
 
-	string nameOne;
-	string nameTwo;
+	string nameOne, nameTwo;
 
 	bool playerOneGoesFirst = false;
 	bool playerTwoGoesFirst = false;
@@ -199,7 +197,6 @@ void Game::playGame()
 			controller.movePlayer(playerOne);
 			Console::setCursorPosition(2, 2);
 			Console::pause("Press any key to roll!");
-			// Sleep(1000);
 
 			// Player One Wins
 			if (playerOne.getPlayerPosition() == 25)
@@ -223,7 +220,6 @@ void Game::playGame()
 				controller.movePlayer(playerTwo);
 				Console::setCursorPosition(2, 2);
 				Console::pause("Press any key to roll!");
-				// Sleep(1000);
 
 				// Player Two Wins
 			
@@ -251,7 +247,6 @@ void Game::playGame()
 			controller.movePlayer(playerTwo);
 			Console::setCursorPosition(2, 2);
 			Console::pause("Press any key to roll!");
-			// Sleep(1000);
 
 			// Player Two wins
 			if (playerTwo.getPlayerPosition() >= 25)
@@ -275,7 +270,6 @@ void Game::playGame()
 				controller.movePlayer(playerOne);
 				Console::setCursorPosition(2, 2);
 				Console::pause("Press any key to roll!");
-				// Sleep(1000);
 
 				// Player One wins
 				if (playerOne.getPlayerPosition() >= 25)

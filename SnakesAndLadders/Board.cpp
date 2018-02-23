@@ -62,9 +62,9 @@ void Board::drawBoard(int boardX, int boardY, Player playerOne, Player playerTwo
 
 	// ### BOARD TILES ###
 
-	Console::setCursorPosition(boardY + offSet*offSetMultiplier, boardX);
+	Console::setCursorPosition(boardY + offSet * offSetMultiplier, boardX);
 	
-	for (int i = 1; i <= 25; i++)
+	for (int i = 1; i <= numOfTiles; i++)
 	{
 		// Change square colour depending on what player is stepping it
 		if (i == playerOne.getPlayerPosition() && i == playerTwo.getPlayerPosition())
