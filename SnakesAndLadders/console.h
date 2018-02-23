@@ -133,8 +133,8 @@ public:
 
 	/*
 	19/01/2018 - Functions added by Filipe Serrazina (17123437)
-	drawLineH - Draws an horizontal line with a given characted.
-	drawLineV - Draws an vertical line with a given characted.
+	drawLineH - Draws a horizontal line with a given character.
+	drawLineV - Draws a vertical line with a given character.
 	*/
 	static void drawLineH(int, char);
 	static void drawLineV(int, char);

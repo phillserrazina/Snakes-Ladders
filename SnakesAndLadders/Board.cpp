@@ -39,27 +39,32 @@ int Board::getBoardHeight()
 
 void Board::drawBoard(int boardX, int boardY, Player playerOne, Player playerTwo)
 {
-	int offSet = 2.5;
+	int offSet = 2;
 	int offSetMultiplier = 5;
 
 	// ### BOARD EDGES ###
+
+	// Upper side
 	Console::setCursorPosition(boardY, boardX);
 	Console::drawLineH(boardWidth, '-');
 
+	// Lower side
 	Console::setCursorPosition(boardY + offSet * 6, boardX);
 	Console::drawLineH(boardWidth, '-');
 
+	// Left side
 	Console::setCursorPosition(boardY + 1, boardX - 1);
 	Console::drawLineV(boardHeight, '|');
 
+	// Right side
 	Console::setCursorPosition(boardY + 1, boardX + boardWidth);
 	Console::drawLineV(boardHeight, '|');
 
 	// ### BOARD TILES ###
 
-	Console::setCursorPosition(boardY + offSet*offSetMultiplier, boardX);
+	Console::setCursorPosition(boardY + offSet * offSetMultiplier, boardX);
 	
-	for (int i = 1; i <= 25; i++)
+	for (int i = 1; i <= numOfTiles; i++)
 	{
 		// Change square colour depending on what player is stepping it
 		if (i == playerOne.getPlayerPosition() && i == playerTwo.getPlayerPosition())
@@ -82,7 +87,8 @@ void Board::drawBoard(int boardX, int boardY, Player playerOne, Player playerTwo
 			Console::setCursorPosition(boardY + offSet * offSetMultiplier, boardX);
 		}
 
-		// Add a space for perfectionism due to 1digit--2digit relation
+		// Add a space before 1 and 6 for perfectionism so that they are lined up with the
+		// rest of the numbers
 		if (i == 1 || i == 6)
 			cout << " ";
 
@@ -92,6 +98,8 @@ void Board::drawBoard(int boardX, int boardY, Player playerOne, Player playerTwo
 
 			Console::setColour(Console::BLACK, Console::WHITE);
 
+			// Since 5 is on the edge of the board, adding a space would distort the board,
+			// therefore, a space is only added to the other numbers
 			if (i != 5)
 			{
 				cout << "     ";
@@ -103,6 +111,8 @@ void Board::drawBoard(int boardX, int boardY, Player playerOne, Player playerTwo
 
 			Console::setColour(Console::BLACK, Console::WHITE);
 
+			// Since 10, 15, 20 and 25 are on the edge of the board, adding a space would distort the board,
+			// therefore, a space is only added to the rest of the numbers
 			if (i != 10 && i != 15 && i != 20 && i != 25)
 			{
 				cout << "    ";

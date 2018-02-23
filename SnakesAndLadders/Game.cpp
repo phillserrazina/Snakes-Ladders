@@ -1,12 +1,12 @@
 #include "Game.h"
 
-// Function that sets the Visual Settings (Console name and colour)
+// Function that sets the Visual Settings (Console name, colour and size)
 void Game::setVisualSettings()
 {
 	Console::setWindowTitle("Console Snakes & Ladders");	// Set Window Title
 	Console::setTextBufferSize(30, 110);					// Set Console Size
 	Console::setWindowPosition(200, 450);					// Set Console Position
-	Console::setColour(Console::BLACK, Console::WHITE);		// Set bg colour to white and text colour to black.
+	Console::setColour(Console::BLACK, Console::WHITE);		// Set background colour to white and text colour to black.
 	Console::clear();
 }
 
@@ -65,6 +65,30 @@ void Game::mainMenu()
 	}
 }
 
+// Function that handles the Rules Menu.
+void Game::rulesMenu()
+{
+	Console::clear();
+
+	string choice;
+	cout << "The rules of this game are very simple:" << endl << endl;
+	cout << "1. A dice is rolled to determine who goes first (highest value goes first);" << endl;
+	cout << "2. Both players roll the dice in turns until they reach tile 25;" << endl;
+	cout << "3. If a player lands on the bottom of the ladder, they move to its' top;" << endl;
+	cout << "4. If a player lands on the head of the snake, they move to its' tail;" << endl;
+	cout << "5. To win a player must roll the exact number to land on square 25 or they do NOT move;" << endl;
+	cout << endl << "Type 'back' to go to the main menu." << endl << endl;
+	cin >> choice;
+
+	while (choice != "back")
+	{
+		cout << "That is not a valid command. Type 'back' to go to the main menu." << endl;
+		cin >> choice;
+	}
+
+	mainMenu();
+}
+
 // Function that handles the Main Game
 void Game::playGame()
 {
@@ -72,22 +96,19 @@ void Game::playGame()
 
 	Dice dice;
 	Board board;
-	Player playerOne;
-	Player playerTwo;
+	Player playerOne, playerTwo;
 	Controller controller;
 
-	string nameOne;
-	string nameTwo;
+	string nameOne, nameTwo;
 
 	bool playerOneGoesFirst = false;
 	bool playerTwoGoesFirst = false;
 
-	bool playerOneWin = false;
-	bool playerTwoWin = false;
+	bool gameOver = false;
 
-	fstream winFile("winLog.txt", ios::out);
+	fstream winFile("winLog.txt", ios::app);
 
-	// ### Game Core ###
+	// GAME CORE
 
 	board.drawBoard(40, 1, playerOne, playerTwo);
 
@@ -119,12 +140,12 @@ void Game::playGame()
 	cout << "A die is going to be rolled to determine who goes first.";
 	Sleep(2000);
 
-	Console::clear();
-	board.drawBoard(40, 1, playerOne, playerTwo);
-
-	// Get rolls
+	// Get rolls to see who goes first
 	while (playerOneGoesFirst != true && playerTwoGoesFirst != true)
 	{
+		Console::clear();
+		board.drawBoard(40, 1, playerOne, playerTwo);
+
 		Console::setCursorPosition(16, 45);
 		Sleep(1000);
 		int playerOneRoll = dice.rollDie();
@@ -137,22 +158,23 @@ void Game::playGame()
 		Console::setCursorPosition(18, 45);
 
 		// Print who goes first
+		// P1 goes first
 		if (playerOneRoll > playerTwoRoll)
 		{
 			cout << playerOne.getPlayerName() << " goes first!";
 			playerOneGoesFirst = true;
 		}
+		// P2 goes first
 		else if (playerOneRoll < playerTwoRoll)
 		{
 			cout << playerTwo.getPlayerName() << " goes first!";
 			playerTwoGoesFirst = true;
 		}
+		// They draw
 		else if (playerOneRoll == playerTwoRoll)
 		{
 			cout << "It's a draw!";
 			Sleep(1500);
-			Console::clear();
-			board.drawBoard(40, 1, playerOne, playerTwo);
 		}
 	}
 
@@ -161,7 +183,7 @@ void Game::playGame()
 	board.drawBoard(40, 1, playerOne, playerTwo);
 
 	// Game Loop
-	while (playerOneWin != true && playerTwoWin != true)
+	while (gameOver != true)
 	{
 		// Draw new board
 		Console::clear();
@@ -170,9 +192,6 @@ void Game::playGame()
 		// Player One goes first
 		if (playerOneGoesFirst == true)
 		{
-			int prevPlayerOnePosition = playerOne.getPlayerPosition();
-			int prevPlayerTwoPosition = playerTwo.getPlayerPosition();
-
 			// Move Player One and display result
 			Console::setCursorPosition(17, 35);
 			controller.movePlayer(playerOne);
@@ -182,11 +201,11 @@ void Game::playGame()
 			// Player One Wins
 			if (playerOne.getPlayerPosition() == 25)
 			{
-				playerOneWin = true;
+				gameOver = true;
 				Console::clear();
 
 				// Store Game Result into file
-				winFile << playerOne.getPlayerName() << " won" << endl;
+				winFile << playerOne.getPlayerName() << " won against " << playerTwo.getPlayerName() << " in " << playerOne.getNoOfMoves() << " moves" << endl;
 
 				Console::setCursorPosition(10, 40);
 				cout << playerOne.getPlayerName() << " won!";
@@ -194,25 +213,29 @@ void Game::playGame()
 				mainMenu();
 			}
 
-			// Move Player Two and display result
-			Console::setCursorPosition(18, 35);
-			controller.movePlayer(playerTwo);
-			Console::setCursorPosition(2, 2);
-			Console::pause("Press any key to roll!");
-
-			// Player Two Wins
-			if (playerTwo.getPlayerPosition() == 25)
+			if (gameOver != true)
 			{
-				playerTwoWin = true;
-				Console::clear();
+				// Move Player Two and display result
+				Console::setCursorPosition(18, 35);
+				controller.movePlayer(playerTwo);
+				Console::setCursorPosition(2, 2);
+				Console::pause("Press any key to roll!");
 
-				// Store Game Result into file
-				winFile << playerTwo.getPlayerName() << " won" << endl;
+				// Player Two Wins
+			
+				if (playerTwo.getPlayerPosition() == 25)
+				{
+					gameOver = true;
+					Console::clear();
 
-				Console::setCursorPosition(10, 40);
-				cout << playerTwo.getPlayerName() << " won!";
-				Sleep(3000);
-				mainMenu();
+					// Store Game Result into file
+					winFile << playerTwo.getPlayerName() << " won against " << playerOne.getPlayerName() << " in " << playerTwo.getNoOfMoves() << " moves" << endl;
+
+					Console::setCursorPosition(10, 40);
+					cout << playerTwo.getPlayerName() << " won!";
+					Sleep(3000);
+					mainMenu();
+				}
 			}
 		}
 
@@ -228,11 +251,11 @@ void Game::playGame()
 			// Player Two wins
 			if (playerTwo.getPlayerPosition() >= 25)
 			{
-				playerTwoWin = true;
+				gameOver = true;
 				Console::clear();
 
 				// Store Game Result into file
-				winFile << playerTwo.getPlayerName() << " won" << endl;
+				winFile << playerTwo.getPlayerName() << " won against " << playerOne.getPlayerName() << " in " << playerTwo.getNoOfMoves() << " moves" << endl;
 
 				Console::setCursorPosition(10, 40);
 				cout << playerTwo.getPlayerName() << " won!";
@@ -240,50 +263,29 @@ void Game::playGame()
 				mainMenu();
 			}
 
-			// Move Player One and display result
-			Console::setCursorPosition(18, 35);
-			controller.movePlayer(playerOne);
-			Console::setCursorPosition(2, 2);
-			Console::pause("Press any key to roll!");
-
-			// Player One wins
-			if (playerOne.getPlayerPosition() >= 25)
+			if (gameOver != true)
 			{
-				playerOneWin = true;
-				Console::clear();
+				// Move Player One and display result
+				Console::setCursorPosition(18, 35);
+				controller.movePlayer(playerOne);
+				Console::setCursorPosition(2, 2);
+				Console::pause("Press any key to roll!");
 
-				// Store Game Result into file
-				winFile << playerOne.getPlayerName() << " won" << endl;
+				// Player One wins
+				if (playerOne.getPlayerPosition() >= 25)
+				{
+					gameOver = true;
+					Console::clear();
 
-				Console::setCursorPosition(10, 40);
-				cout << playerOne.getPlayerName() << " won!";
-				Sleep(3000);
-				mainMenu();
+					// Store Game Result into file
+					winFile << playerOne.getPlayerName() << " won against " << playerTwo.getPlayerName() << " in " << playerOne.getNoOfMoves() << " moves" << endl;
+
+					Console::setCursorPosition(10, 40);
+					cout << playerOne.getPlayerName() << " won!";
+					Sleep(3000);
+					mainMenu();
+				}
 			}
 		}
 	}
-}
-
-// Function that handles the Rules Menu.
-void Game::rulesMenu()
-{
-	Console::clear();
-
-	string choice;
-	cout << "The rules of this game are very simple:" << endl << endl;
-	cout << "1. A dice is rolled to determine who goes first (highest value goes first);" << endl;
-	cout << "2. Both players roll the dice in turns until they reach tile 25;" << endl;
-	cout << "3. If a player lands on the bottom of the ladder, they move to its' top;" << endl;
-	cout << "4. If a player lands on the head of the snake, they move to its' tail;" << endl;
-	cout << "5. To win a player must roll the exact number to land on square 25 or they do NOT move;" << endl;
-	cout << endl << "Type 'back' to go to the main menu." << endl << endl;
-	cin >> choice;
-
-	while (choice != "back")
-	{
-		cout << "That is not a valid command. Type 'back' to go to the main menu." << endl;
-		cin >> choice;
-	}
-
-	mainMenu();
 }

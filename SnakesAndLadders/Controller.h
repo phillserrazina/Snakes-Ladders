@@ -13,8 +13,6 @@ using namespace std;
 class Controller
 {
 private:
-	int roll;
-
 	static const int NUM_OF_SNAKES = 3;
 	Snake snakeArray[NUM_OF_SNAKES] = { { 13, 2 },{ 19, 6 },{ 24, 3 } };
 
@@ -23,9 +21,6 @@ private:
 
 public:
 	Controller() {}
-
-	void setRoll(int);
-	int getRoll();
 
 	void movePlayer(Player &);
 };

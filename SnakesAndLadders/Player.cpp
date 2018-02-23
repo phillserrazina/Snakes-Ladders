@@ -6,6 +6,27 @@ Player::Player()
 {
 	playerName = "Default";
 	playerPosition = 1;
+	noOfMoves = 0;
+}
+
+void Player::setPlayerRoll(int i)
+{
+	roll = i;
+}
+
+int Player::getPlayerRoll()
+{
+	return roll;
+}
+
+void Player::setNoOfMoves(int i)
+{
+	noOfMoves = i;
+}
+
+int Player::getNoOfMoves()
+{
+	return noOfMoves;
 }
 
 void Player::setPlayerPosition(int i)

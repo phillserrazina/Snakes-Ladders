@@ -9,11 +9,20 @@ using namespace std;
 class Player
 {
 private:
+	int roll;
+	int noOfMoves;
+
 	int playerPosition;
 	string playerName;
 
 public:
 	Player();
+
+	void setPlayerRoll(int);
+	int getPlayerRoll();
+
+	void setNoOfMoves(int);
+	int getNoOfMoves();
 
 	void setPlayerPosition(int);
 	int getPlayerPosition();
